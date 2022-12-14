@@ -6,7 +6,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, Border, Side
 from typing import Dict, Tuple, List, Callable
 
-#make conflict 2
+#make conflict
 class Vacancy:
     def __init__(self, dict_vac: Dict[str, str]):
         self.name: str = dict_vac['name']
