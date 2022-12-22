@@ -1,7 +1,7 @@
 import csv
 import itertools
 import re
-
+import cProfile
 import numpy as np
 from matplotlib import pyplot as plt
 from openpyxl import Workbook
@@ -9,8 +9,13 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, Border, Side
 from typing import Dict, Tuple, List, Callable
 
+pr = cProfile.Profile()
+pr.enable()
 
 class Vacancy:
+    """Класс вакансии, хранящий информацию о конкретной вакансии.
+
+    """
 
     def __init__(self, dict_vac: Dict[str, str]):
         """Инициализирует обхект Vacancy.
@@ -86,7 +91,7 @@ class DataSet:
         :param file_name: Имя файла.
         :return: Tuple из списка заголовков и данных.
         """
-        with open(file_name, newline='') as csvfile:
+        with open(file_name, newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             data = [line for line in reader]
             return data[0], data[1:]
@@ -406,3 +411,5 @@ if report_type == 'Вакансии':
 else:
     data = DataSet(file_name, name)
     ReportGraphic(data).generate_image()
+pr.disable()
+pr.print_stats()
